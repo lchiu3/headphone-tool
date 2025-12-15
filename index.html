@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Headphone Tool: Self-Hosted</title>
+    <title>Headphone Tool: 100% Offline</title>
     
     <script src="camera_utils.js"></script>
     <script src="face_mesh.js"></script>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="instr-box">
-            <span id="instr" class="instr-text">Loading Local AI...</span>
+            <span id="instr" class="instr-text">Loading Local Files...</span>
         </div>
     </div>
 
@@ -72,7 +72,6 @@
         let isProcessingAI = false; 
         let ghost = { x: 320, y: 240, w: 200, h: 250 };
         
-        // Globals
         let faceMesh = null;
         let hands = null;
 
@@ -163,10 +162,12 @@
 
         async function startApp() {
             try {
-                // Point to CLOUDFLARE only for the heavy binary assets (WASM), 
-                // but use our LOCAL JS files for the logic.
-                // Cloudflare is the most robust CDN in Asia.
-                faceMesh = new FaceMesh({locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/mediapipe-face-mesh/0.4.1633559619/${file}`});
+                // THE KEY CHANGE: locateFile simply returns the file name.
+                // This forces the code to look in the CURRENT FOLDER on GitHub.
+                faceMesh = new FaceMesh({locateFile: (file) => {
+                    return file; 
+                }});
+                
                 faceMesh.setOptions({maxNumFaces: 1, refineLandmarks: true, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5, useCpuBackend: true});
                 faceMesh.onResults((res) => { faceResults = res; });
                 await faceMesh.initialize();
@@ -187,8 +188,10 @@
             if(handsActive) return;
             btnHands.innerText = "Loading...";
             try {
-                // Same strategy: Local Logic, Cloudflare Assets
-                hands = new Hands({locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/mediapipe-hands/0.4.1646424915/${file}`});
+                // Same local logic for Hands
+                hands = new Hands({locateFile: (file) => {
+                    return file;
+                }});
                 hands.setOptions({maxNumHands: 1, modelComplexity: 0, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5, useCpuBackend: true});
                 hands.onResults((res) => { handResults = res; });
                 await hands.initialize();
