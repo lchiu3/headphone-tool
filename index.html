@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Headphone Tool: 100% Offline</title>
+    <title>Headphone Tool: 100% Local</title>
     
     <script src="camera_utils.js"></script>
     <script src="face_mesh.js"></script>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="instr-box">
-            <span id="instr" class="instr-text">Loading Local Files...</span>
+            <span id="instr" class="instr-text">Loading Local Brains...</span>
         </div>
     </div>
 
@@ -162,8 +162,10 @@
 
         async function startApp() {
             try {
-                // THE KEY CHANGE: locateFile simply returns the file name.
-                // This forces the code to look in the CURRENT FOLDER on GitHub.
+                // IMPORTANT: locateFile simply returns the file name (file).
+                // This forces the code to look for "face_mesh.wasm" in the 
+                // SAME FOLDER as index.html, instead of asking the internet.
+                
                 faceMesh = new FaceMesh({locateFile: (file) => {
                     return file; 
                 }});
@@ -181,6 +183,7 @@
                 aiLoop();
             } catch (err) { 
                 instr.innerText = "Error: " + err.message;
+                instr.className = "instr-text instr-bad";
             }
         }
 
