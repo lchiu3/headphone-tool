@@ -1,3 +1,4 @@
+var exports = {}; var module = {};
 (function(){/*
 
  Copyright The Closure Library Authors.
@@ -83,3 +84,4 @@ navigator.userAgent.includes("Mac")&&"ontouchend"in document},selfieMode:{type:0
 onChange:function(c){var d,e,g;return I(function(f){if(1==f.g)return d=Ic(c),e="third_party/mediapipe/modules/hand_landmark/"+d,F(f,Cc(b.g,d),2);g=f.h;b.g.overrideFile(e,g);return f.return(!0)})}},minDetectionConfidence:{type:1,graphOptionXref:{calculatorType:"TensorsToDetectionsCalculator",calculatorName:"handlandmarktrackinggpu__palmdetectiongpu__TensorsToDetectionsCalculator",fieldName:"min_score_thresh"}},minTrackingConfidence:{type:1,graphOptionXref:{calculatorType:"ThresholdingCalculator",calculatorName:"handlandmarktrackinggpu__handlandmarkgpu__ThresholdingCalculator",
 fieldName:"threshold"}}}})}x=Jc.prototype;x.close=function(){this.g.close();return Promise.resolve()};x.onResults=function(a){this.g.onResults(a)};x.initialize=function(){var a=this;return I(function(b){return F(b,a.g.initialize(),0)})};x.reset=function(){this.g.reset()};x.send=function(a){var b=this;return I(function(c){return F(c,b.g.send(a),0)})};x.setOptions=function(a){this.g.setOptions(a)};J("Hands",Jc);
 J("HAND_CONNECTIONS",[[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[0,17],[17,18],[18,19],[19,20]]);J("VERSION","0.4.1646424915");}).call(this);
+window.Hands = exports.Hands || module.exports.Hands || Hands;
